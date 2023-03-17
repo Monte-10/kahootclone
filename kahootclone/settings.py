@@ -11,22 +11,27 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vt%5rx=n&2vl!p9b6na@wkn*+^^^7lyp#-zfhf500_*x1vl@&&'
+# SECRET_KEY = 'django-insecure-vt%5rx=n&2vl!p9b6na@wkn*+^^^7lyp#-zfhf500_*x1vl@&&'
+SECRET_KEY = os.environ.get('SECRET_KEY', default='your_secret_key')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if 'DEBUG' in os.environ:
+    DEBUG = os.environ.get('DEBUG').lower() in ['true', 't', '1']
+else:
+    DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -37,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'models.apps.ModelsConfig',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +60,7 @@ ROOT_URLCONF = 'kahootclone.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,15 +78,33 @@ WSGI_APPLICATION = 'kahootclone.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+# URL: postgres://Monte-10@ep-floral-flower-150155.eu-central-1.aws.neon.tech/kahootclone
+import dj_database_url
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DATABASES = {}
+
+POSTGRESQL_URL = 'postgres://alumnodb:alumnodb@localhost/psi'
+
+if 'TESTING' in os.environ:
+    db_from_env = {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'psi',
+        'USER': 'alumnodb',
+        'PASSWORD': 'alumnodb',
+        'HOST': 'localhost',
+        'PORT': '',
     }
-}
+else:
+    db_from_env = dj_database_url.config(default=POSTGRESQL_URL, conn_max_age=500)
 
+DATABASES['default'] = db_from_env
 
+ALLOWED_HOSTS += ['localhost', '127.0.0.1']
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -105,7 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Madrid'
 
 USE_I18N = True
 
