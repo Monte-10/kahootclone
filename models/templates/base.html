@@ -1,9 +1,9 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
    <head>
-      <title>
-         {% block title %} KahootClone {% endblock %}
-      </title>
+      <title> {% block title %} KahootClone {% endblock %} </title>
+      <link rel="stylesheet" href="{% static 'css/styles.css' %}">
    </head>
    <body>
       {% block header %} 
@@ -11,10 +11,17 @@
       <hr>
       {% endblock %}
       {% block menu %}
+      <nav>
       <a href="{% url 'home' %}"> Homepage</a>
-      <a href="{% url 'login' %}"> Log In</a>
-      <a href="{% url 'logout' %}"> Log Out</a>
-      <a href="{% url 'singup' %}"> Sign-up</a>
+      {% if user.is_authenticated %}
+         Hi {{ user.username }}!
+         <p><a href="{% url 'logout' %}">Log Out</a></p>
+      {% else %}
+         <p>You are not logged in</p>
+         <a href="{% url 'login' %}">Log In</a>
+         <a href="{% url 'signup' %}">Sign Up</a>
+      {% endif %}
+      </nav>
       <hr>
       {% endblock %}
       {% block content %}
@@ -23,7 +30,7 @@
       {% endblock %}
       {% block footer %} 
       <hr>
-      <p>Footer goes here</p>
+      <p>©2023 KahootClone</p>
       {% endblock %}
    </body>
 </html>

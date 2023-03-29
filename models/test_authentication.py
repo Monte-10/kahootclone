@@ -2,11 +2,14 @@
 # lun ago 22 11:14:51 CEST 2022
 
 import re
+import os
 from decimal import Decimal
 
 
 from django.test import Client, TestCase  # , TransactionTestCase
 from django.urls import reverse
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kahootclone.settings')
 
 try:
     from models.models import User

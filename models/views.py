@@ -15,7 +15,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 def home(request):
     return render(request, 'home.html')
 
-def singup(request):
+def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -29,5 +29,8 @@ def singup(request):
     else:
         form = UserCreationForm()
         
-    return render(request, 'singup.html', {'form': form})
-            
+    context = {
+       'form': form,
+    }
+        
+    return render(request, 'registration/sign_up.html', context)
