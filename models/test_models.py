@@ -5,6 +5,7 @@ from datetime import datetime, timezone, timedelta
 from time import sleep
 import random
 import string
+import os
 
 ###################
 # You may modify the following variables
@@ -18,6 +19,7 @@ from .models import Guess as Guess
 # we assume the different states are defined in constants.py
 from .constants import WAITING as WAITING
 
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kahootclone.settings')
 # Please do not modify anything below this line
 ###################
 
