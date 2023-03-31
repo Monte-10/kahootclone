@@ -7,15 +7,16 @@ import random
 import string
 import os
 
+# import carpeta.archivo 
 ###################
 # You may modify the following variables
-from .models import User as User
-from .models import Questionnaire as Questionnaire
-from .models import Question as Question
-from .models import Answer as Answer
-from .models import Game as Game
-from .models import Participant as Participant
-from .models import Guess as Guess
+from models import User as User
+from models import Questionnaire as Questionnaire
+from models import Question as Question
+from models import Answer as Answer
+from models import Game as Game
+from models import Participant as Participant
+from models import Guess as Guess
 # we assume the different states are defined in constants.py
 from .constants import WAITING as WAITING
 

@@ -11,11 +11,11 @@ from django.urls import reverse
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kahootclone.settings')
 
-try:
-    from models.models import User
-except ImportError:
-    print('No custom defined User method defined in models.py')
-    exit(0)
+#try:
+from models.models import User
+#except ImportError:
+#    print('No custom defined User method defined in models.py')
+#    exit(0)
 
 USER_SESSION_ID = "_auth_user_id"
 
