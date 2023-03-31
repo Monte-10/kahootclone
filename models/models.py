@@ -3,7 +3,10 @@ from django.db import models
 import uuid
 import random
 
+
+
 class User(AbstractUser):
+    pass
     username = models.CharField(max_length=30, unique=True)
     
     groups = None
