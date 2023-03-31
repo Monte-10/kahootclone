@@ -9,13 +9,15 @@ from decimal import Decimal
 from django.test import Client, TestCase  # , TransactionTestCase
 from django.urls import reverse
 
+
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kahootclone.settings')
 
-#try:
-from models.models import User
-#except ImportError:
-#    print('No custom defined User method defined in models.py')
-#    exit(0)
+try:
+    from models.models import User
+except ImportError:
+    print('No custom defined User method defined in models.py')
+    exit(0)
 
 USER_SESSION_ID = "_auth_user_id"
 
@@ -33,7 +35,7 @@ PAGE_AFTER_LOGOUT = "home"
 SERVICE_DEF = {
      LOGIN_SERVICE: {
          "title": 'Log In',
-         "pattern": r"Log In"
+         "pattern": "Log In"
      },
 }
 # PLease do not modify anything below this line
