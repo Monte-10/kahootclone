@@ -106,3 +106,4 @@ class Guess(models.Model):
 
     def __str__(self):
         return f"{self.participant.alias}: {self.question} - {self.answer.answer}"
+    
