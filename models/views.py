@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
+from .forms import SignUpForm
 
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -17,7 +18,7 @@ def home(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -27,7 +28,7 @@ def signup(request):
             return redirect('home')
         
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
         
     context = {
        'form': form,
