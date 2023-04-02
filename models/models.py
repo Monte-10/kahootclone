@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from .constants import WAITING, QUESTION, ANSWER, LEADERBOARD, GAME_STATES
 import uuid
 import random
 
@@ -15,6 +16,12 @@ class Questionnaire(models.Model):
     title = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        default=1,
+    )
 
     def __str__(self):
         return self.title
@@ -22,9 +29,11 @@ class Questionnaire(models.Model):
 
 class Question(models.Model):
     text = models.CharField(max_length=255)
+    question = models.CharField(max_length=255, default=1)
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    answerTime = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.questionnaire.title}: {self.text}"
@@ -34,35 +43,22 @@ class Answer(models.Model):
     answer = models.CharField(max_length=255)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     correct = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.answer
 
 
 class Game(models.Model):
-    WAITING = 1
-    QUESTION = 2
-    ANSWER = 3
-    LEADERBOARD = 4
-    STATE_CHOICES = [
-        (WAITING, 'Waiting'),
-        (QUESTION, 'Question'),
-        (ANSWER, 'Answer'),
-        (LEADERBOARD, 'Leaderboard'),
-    ]
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    state = models.IntegerField(choices=STATE_CHOICES, default=WAITING)
-    public_id = models.IntegerField(unique=True)
-    countdown_time = models.IntegerField(default=0)
-    question_no = models.IntegerField(default=0)
+    state = models.IntegerField(choices=GAME_STATES, default=WAITING)
+    publicId = models.IntegerField(unique=True, default=random.randint(100000,999999))
+    countdownTime = models.IntegerField(default=0)
+    questionNo = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.public_id = random.randint(1, 10)
+            self.publicId = random.randint(1, 10)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -70,6 +66,7 @@ class Game(models.Model):
 
 
 class Participant(models.Model):
+    participant_id = models.IntegerField(unique=True, primary_key=True, default=random.randint(100000,999999))
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     alias = models.CharField(max_length=255)
     points = models.IntegerField(default=0)
@@ -86,11 +83,11 @@ class Participant(models.Model):
 
 
 class Guess(models.Model):
+    guess_id = models.IntegerField(unique=True, primary_key=True, default=random.randint(100000,999999))
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         if not self.pk:
