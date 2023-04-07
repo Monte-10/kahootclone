@@ -20,7 +20,6 @@ class Questionnaire(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        default=1,
     )
 
     def __str__(self):
@@ -29,7 +28,7 @@ class Questionnaire(models.Model):
 
 class Question(models.Model):
     text = models.CharField(max_length=255)
-    question = models.CharField(max_length=255, default=1)
+    question = models.CharField(max_length=255)
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -58,7 +57,7 @@ class Game(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.publicId = random.randint(1, 10)
+            self.publicId = random.randint(100000, 999999)
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -66,7 +65,6 @@ class Game(models.Model):
 
 
 class Participant(models.Model):
-    participant_id = models.IntegerField(unique=True, primary_key=True, default=random.randint(100000,999999))
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     alias = models.CharField(max_length=255)
     points = models.IntegerField(default=0)
@@ -83,7 +81,6 @@ class Participant(models.Model):
 
 
 class Guess(models.Model):
-    guess_id = models.IntegerField(unique=True, primary_key=True, default=random.randint(100000,999999))
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
