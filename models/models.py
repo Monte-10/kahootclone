@@ -52,6 +52,8 @@ class Game(models.Model):
         (LEADERBOARD, 'Leaderboard'),
     )
     
+    
+    
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     state = models.IntegerField(choices=STATE_CHOICES, default=WAITING)
