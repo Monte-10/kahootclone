@@ -17,3 +17,5 @@ whitenoise==5.2.0
 django-cors-headers==3.2.1
 djangorestframework==3.13
 djangorestframework-simplejwt==4
+Faker
+Dumper
