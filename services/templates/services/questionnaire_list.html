@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+   Questionnaire list
+{% endblock %}
+
+{% block content %}
+    <div class="container overflow-auto">
+        <div class="row">
+            <div class="col-12">
+                <h1>Questionnaire List</h1>
+                <a class="btn btn-primary btn-lg mb-2" role="button" href="{% url 'questionnaire-create' %}">Add New Questionnaire</a>
+                <br>
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-striped">
+                            <tbody>
+                            {% for questionnaire in user.questionnaire_set.all %}
+                            <tr>
+                                <td><a href="{% url 'questionnaire-detail' questionnaire.id %}">{{ questionnaire.title }}</a></td>
+                                <td><a class="btn btn-outline-danger btn-sm" href="{% url 'questionnaire-remove' questionnaire.id %}">Remove</a></td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

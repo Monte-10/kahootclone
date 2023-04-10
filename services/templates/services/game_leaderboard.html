@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+   Podium
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{%block header%}
+{%endblock%}
+
+{% block content %}
+        <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center bg-info">
+            <h1 class="text-white">Podium</h1>
+            {% if game.participant_set.count > 0 %}
+            <div id="chart_div" style="width: 100%; height: 500px;"></div>
+            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+            <script type="text/javascript">
+                    google.load("visualization", "1", {packages:["corechart"]});
+                    google.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+                        var data = google.visualization.arrayToDataTable([
+                            ['Participant', 'Points'],
+                            {% for participant in game.participant_set.all %}
+                                ['{{ participant.alias }}', {{ participant.points }}],
+                            {% endfor %}
+                        ]);
+                        var options = {
+                            title: '',
+                            hAxis: {title: '', titleTextStyle: {color: 'red'}},
+                            vAxis: {minValue: 0}
+                        };
+                        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+                        chart.draw(data, options);
+                    }
+                </script>
+            {% else %}
+                <h1 class="text-white">No participants</h1>
+            {% endif %}
+            {%load static%}
+                <audio controls loop autoplay hidden>
+                    <source src="{% static 'audio/podium.mp3' %}" type="audio/mpeg"> Your browser does not support the audio element .
+                </audio>
+            <br>
+            <button class="btn btn-primary  btn-lg" onclick="window.location.href = '{% url 'home' %}';">New Kahoot</button>
+        </div>
+{% endblock %}

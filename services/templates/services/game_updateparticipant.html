@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}
+   Participants
+{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{%block header%}
+{%endblock%}
+{% block content %}
+    {% if is_owner %}
+    <div class="center text-center">
+        {% for participant in participants %}
+            <h5>{{ participant.alias }}</h5>
+        {% endfor %}
+    </div>
+    {%else%}
+        Game does not belong to logged user
+    {%endif%}
+{% endblock %}

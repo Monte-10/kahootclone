@@ -1,0 +1,17 @@
+h1 {
+    color: rgba(181, 21, 187, 0.795);
+}
+
+h3 {
+    color: rgba(181, 21, 187, 0.795);
+}
+
+#id_title {
+    width: 600px;
+}
+
+@media (max-width: 979px) .navbar-fixed-top,
+.navbar-fixed-bottom {
+    position: fixed;
+}
+}

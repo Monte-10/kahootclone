@@ -5,18 +5,49 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
-    <h1>Bienvenido {{ user.username }}</h1>
-    <p><a href="{% url 'logout' %}">Log Out</a></p>
-{% else %}
-    <p>Haz Log In para empezar</p>
-    <a href="{% url 'login' %}">Log In</a>
-    <p>Si no tienes cuenta ¡Registrate!</p>
-    <a href="{% url 'signup' %}">Sign Up</a>
-{% endif %}
-{% endblock content %}
+<div class="container mt-8">
+    
+    <div class="col-md-12 text-center">
+        {% if user.is_authenticated %}
+        <h2> Hi {{ user.username }}! </h2>
+        <a class="btn btn-primary btn-lg" role="button" href="{% url 'questionnaire-create' %}"> Add New Questionnaire </a>
+        <a class="btn btn-success btn-lg" role="button" href="{% url 'questionnaire-list' %}"> List All Your Questionnaires</a>
+    {% else %}
+        <a class="btn btn-primary btn-lg" role="button" href="{% url 'login' %}"> Log In</a>
+    {% endif %}
+    </div>
 
-<!-- Ejemplo de fichero home.html. 
-Esto es solo un ejemplo para empezar a trabajar, 
-se espera que lo modifiquéis tanto como sea necesario. 
--->
+    {% if user.is_authenticated %}
+    <h3>Your last questionnaires</h3>
+    <div class="row">
+        <div class="col-12">
+            <ul>
+                {% for questionnaire in latest_questionnaire_list %}
+                <li><a href="{% url 'questionnaire-detail' questionnaire.id %}"> {{ questionnaire.title }} </a></li>
+                {% endfor %}
+            {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <p> </p>
+    <br>
+</div>
+
+{% block footer %} 
+<div class="footer  d-none d-sm-block">
+    <div class="row text-center">
+        <hr>
+        <div class="col-sm-6">
+            <h4>Contact</h4>
+            <p>arregloskahoot@gmail.com</p>
+        </div>
+        <div class="col-sm-6">
+            <h4>About</h4>
+            <p>Developed by grupito PSI</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% endblock content %}

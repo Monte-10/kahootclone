@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}
+   Question
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{%block header%}
+{%endblock%}
+
+{% block content %}
+
+        <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center bg-info">
+            <div class="container" >
+                <div class="row d-flex align-items-center justify-content-center">
+                    <div class="col header mt-4 m-2" style="background-color:lavender;" >
+                        <h2 class="display-6">{{ question.question }}</h2>
+                    </div>
+                </div>
+                <div id="divanswer" class="fixed-bottom" style="visibility: hidden">
+                    <div class="row d-flex align-items-center justify-content-center">
+                        <div class="col background m-1" style="background-color:red;color: white;"> {{ question.answer_set.all.0 }} </div>
+                        <div class="col background m-1" style="background-color:blue;color: white;"> {{ question.answer_set.all.1 }} </div>
+                    </div>
+                    <div class="row d-flex align-items-center justify-content-center">
+                        <div class="col background mb-4 m-1" style="background-color:green;color: white;"> {{ question.answer_set.all.2 }} </div>
+                        <div class="col background mb-4 m-1" style="background-color:yellow;color: black;"> {{ question.answer_set.all.3 }} </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% load static %}
+            <audio controls loop autoplay hidden>
+                <source src="{% static 'audio/answer.mp3' %}" type="audio/mpeg"> Your browser does not support the audio element .
+            </audio>
+            
+            <script>
+                function showDivAnswer() {
+                  document.getElementById("divanswer").style.visibility = "visible";
+                }
+                setTimeout("showDivAnswer()", 3000);
+            </script>
+
+            <script>
+                setTimeout(function() {
+                    location.reload();
+                }, {{ question.answerTime }} * 1000);
+            </script>
+
+            <style>
+                .container {
+                    width: 100vw;
+                    height: 100vh;
+                    margin:0px !important;
+                    padding: 0px !important;
+                }
+                .row {
+                    margin-right: 0px !important;
+                    margin-left: 0px !important;
+                    /* display: flex;
+                    align-items: center; */
+                }
+                .background {
+                    width: 50vw;
+                    height: 20vh;
+                    padding: 2rem;
+                    font-size: 2.0rem;
+                 }
+                 .header {
+                    width: 100vw;
+                    height: 40vh;
+                    text-align: center;
+                    padding: 2rem;
+                 }
+                 .v-center {
+                   display: flex;
+                   align-items: center;
+                }
+            </style>
+
+{% endblock %}

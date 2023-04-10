@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}
+   Question detail
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+        
+            <h1>Question Detail</h1>
+
+            <h4>
+                <strong>{{question.question}}</strong> ({{question.answerTime}}s):
+                <a class="btn btn-outline-success btn-sm" href="{% url 'question-update' question.id %}">Edit question</a>
+            </h4>
+
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>Answer</th>
+                    <th>Correct</th>
+                    <th></th>
+                </tr>
+                {% if question.answer_set.all|length == 0 %}
+                <td> No answer detected </td>
+                {% else %}
+                {% for answer in question.answer_set.all %}
+                    <tr>
+                    <td>{{ answer.answer }}</td>
+                    <td>{{ answer.correct }}</td>
+                    <td>
+                        <a class="btn btn-outline-danger btn-sm" href="{% url 'answer-remove' answer.id %}">Remove</a>
+                        <a class="btn btn-outline-success btn-sm" href="{% url 'answer-update' answer.id %}">Edit</a>
+                    </td>
+                    </tr>
+                {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+
+            {% if question.answer_set.all|length < 4 %}
+            <a class="btn btn-primary btn-lg mr-3" href="{% url 'answer-create' question.id %}"> Add New Answer</a>
+            {% endif %}
+            <a class="btn btn-outline-success btn-lg" href="{% url 'questionnaire-detail' question.questionnaire.id %}"> Back to questionnaire</a>
+
+        </div>  
+    </div>
+</div>
+{% endblock %}

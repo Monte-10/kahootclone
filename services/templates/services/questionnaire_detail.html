@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}
+   Questionnaire detail
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+            <h1>Questionnaire Detail</h1>
+
+            <h4>
+                {{ questionnaire.title }}:
+                <a class="btn btn-outline-success btn-sm" href="{% url 'questionnaire-update' questionnaire.id %}">Edit title</a>
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'game-create' questionnaire.id %}">Play Game</a>
+            </h4>
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>Question</th>
+                    <th>Number of answers</th>
+                    <th></th>
+                </tr>
+                {% if questionnaire.question_set.all|length == 0 %}
+                    <td> No questions detected </td>
+                {% else %}
+                    {% for question in questionnaire.question_set.all %}
+                    <tr>
+                    <td><a href="{% url 'question-detail' question.id %}">{{ question.question }}</a></td>
+                    <td>{{ question.answer_set.count }}</td>
+                    <td><a class="btn btn-outline-danger btn-sm" href="{% url 'question-remove' question.id %}">Remove</a></td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+            
+            <a class="btn btn-primary btn-lg mr-3" href="{% url 'question-create' questionnaire.id %}"> Add New Question</a>
+            <a class="btn btn-outline-success btn-lg" href="{% url 'questionnaire-list' %}"> Back to questionnaire list</a>
+        
+        </div>
+    </div>
+</div>
+{% endblock %}

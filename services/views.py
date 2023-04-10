@@ -184,8 +184,7 @@ class AnswerUpdate(LoginRequiredMixin, UpdateView):
         return reverse_lazy('question-detail', kwargs={'pk': self.object.question.id})
     
     def dispatch(self, request, *args, **kwargs):
-        answer = self.get_object()
-        questionnaire = answer.question.questionnaire
+        questionnaire = self.get_object().question.questionnaire
         if request.user != questionnaire.user:
             return redirect('questionnaire-list')
         return super().dispatch(request, *args, **kwargs)
@@ -210,3 +209,58 @@ class GameCreate(LoginRequiredMixin, TemplateView):
             session['is_owner'] = (questionnaire.user == self.request.user)
         return context
 
+class UpdateParticipant(LoginRequiredMixin, TemplateView):
+    template_name = 'services/game_create.html'
+    redirect_field_name = 'login'
+    
+    def get_context_data(self, **kwargs):
+        context = super(UpdateParticipant, self).get_context_data(**kwargs)
+        gameID = self.request.session['gameID']
+        game = get_object_or_404(Game, publicId=gameID)
+        participants = Participant.objects.filter(game=game)
+        context['participants'] = participants
+        context['is_owner'] = self.request.session['is_owner']
+        return context
+    
+class CountDown(LoginRequiredMixin, TemplateView):
+    redirect_field_name = 'login'
+    
+    def get_template_names(self):
+        gameID = self.request.session.get('gameID')
+        game = get_object_or_404(Game, publicId=gameID)
+        if game.state == WAITING:
+            game.state = QUESTION
+            game.save()
+            self.request.session['game_state'] = game.state
+            return 'services/game_countdown.html'
+        elif game.state == QUESTION:
+            game.state = ANSWER
+            game.save()
+            self.request.session['game_state'] = game.state
+            return 'services/game_question.html'
+        elif game.state == ANSWER:
+            if game.questionNo == game.questionnaire.question_set.count()-1:
+                game.state = LEADERBOARD
+            else:
+                game.questionNo += 1
+                game.state = QUESTION
+            self.request.session['game_state'] = game.state
+            game.save()
+            return 'services/game_answer.html'
+        else:
+            return 'services/game_leaderboard.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(CountDown, self).get_context_data(**kwargs)
+        gameID = self.eqquest.session.get('gameID')
+        game = get_object_or_404(Game, publicId=gameID)
+        context['game'] = game
+        question = game.questionnaire.question_set.all()[game.questionNo]
+        context['question'] = question
+        if game.state == ANSWER:
+            guesses = Guess.objects.filter(question=question, game=game)
+            participants = Participant.objects.filter(game=game).count()
+            correct = guesses.filter(answer__correct=True).count()
+            context['percentage'] = round(correct/participants*100, 2) if participants > 0 else 0
+            
+        return context
