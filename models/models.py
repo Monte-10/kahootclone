@@ -19,8 +19,6 @@ class Questionnaire(models.Model):
 
     def __str__(self):
         return self.title
-
-        
     
     class Meta:
         ordering = ['-updated_at']
@@ -59,14 +57,14 @@ class Game(models.Model):
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     state = models.IntegerField(choices=STATE_CHOICES, default=WAITING)
-    publicId = models.IntegerField(unique=True, validators=[MinValueValidator(100000), MaxValueValidator(999999)])
+    publicId = models.IntegerField(unique=True, validators=[MinValueValidator(1), MaxValueValidator(10**6)])
     countdownTime = models.IntegerField(validators=[MinValueValidator(0)], default=3)
     questionNo = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if not self.publicId:
             while True:
-                self.publicId = random.randint(100000, 999999)
+                self.publicId = random.randint(1, 10**6)
                 if not Game.objects.filter(publicId=self.publicId).exists():
                     break
         super(Game,self).save(*args, **kwargs)

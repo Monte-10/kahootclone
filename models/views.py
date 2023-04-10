@@ -12,10 +12,6 @@ from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
-
-def home(request):
-    return render(request, 'home.html')
-
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
