@@ -10,7 +10,7 @@ APP = models
 
 # create alumnodb super user
 create_super_user:
-	$(CMD) shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('alumnodb', 'admin@myproject.com', 'alumnodb')"
+	$(CMD) shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='alumnodb').delete(); User.objects.create_superuser('alumnodb', 'admin@myproject.com', 'alumnodb')"
 
 populate:
 	@echo populate database
