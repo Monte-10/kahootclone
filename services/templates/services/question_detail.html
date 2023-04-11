@@ -23,7 +23,7 @@
                     <th></th>
                 </tr>
                 {% if question.answer_set.all|length == 0 %}
-                <td> Respuesta no detectada </td>
+                <td> No se han encontrado respuestas </td>
                 {% else %}
                 {% for answer in question.answer_set.all %}
                     <tr>
@@ -40,7 +40,7 @@
             </table>
 
             {% if question.answer_set.all|length < 4 %}
-            <a class="btn btn-primary btn-lg mr-3" href="{% url 'answer-create' question.id %}"> Añadir nueva pregunta</a>
+            <a class="btn btn-primary btn-lg mr-3" href="{% url 'answer-create' question.id %}"> Añadir nueva respuesta</a>
             {% endif %}
             <a class="btn btn-outline-success btn-lg" href="{% url 'questionnaire-detail' question.questionnaire.id %}"> Volver al cuestionario</a>
 
