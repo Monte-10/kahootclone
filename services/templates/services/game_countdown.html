@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-   Countdown
+   Contador
 {% endblock %}
 
 {% block stylesheets %}
@@ -14,13 +14,13 @@
     
     <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center bg-info">
         <div class="alert alert-success container p-none text-center" role="alert">
-            <h2>We will start in: </h2>
+            <h2>Empazamos en: </h2>
             <h1 class="display-1" id="countdown"></h1>
-            <h2>seconds</h2>    
+            <h2>segundos</h2>    
         </div>
         {% load static %}
         <audio controls loop autoplay hidden>
-            <source src="{% static 'audio/countdown.mp3' %}" type="audio/mpeg"> Your browser does not support the audio element .
+            <source src="{% static 'audio/countdown.mp3' %}" type="audio/mpeg"> Tu navegador no soporta el audio.
         </audio>
     </div>
 
@@ -32,7 +32,7 @@
           window.location.reload();
         } else {
             if (countdown === 0) {
-                document.getElementById("countdown").innerHTML = "BLAST OFF!!";
+                document.getElementById("countdown").innerHTML = "LETS GO!!!!";
             } else {
                 document.getElementById("countdown").innerHTML = countdown;
             }

@@ -10,8 +10,8 @@
     <div class="col-md-12 text-center">
         {% if user.is_authenticated %}
         <h2> Hi {{ user.username }}! </h2>
-        <a class="btn btn-primary btn-lg" role="button" href="{% url 'questionnaire-create' %}"> Add New Questionnaire </a>
-        <a class="btn btn-success btn-lg" role="button" href="{% url 'questionnaire-list' %}"> List All Your Questionnaires</a>
+        <a class="btn btn-primary btn-lg" role="button" href="{% url 'questionnaire-create' %}"> Añadir Nuevo Cuestionario </a>
+        <a class="btn btn-success btn-lg" role="button" href="{% url 'questionnaire-list' %}"> Ver Todos Tus Cuestionarios</a>
     {% else %}
         <a class="btn btn-primary btn-lg" role="button" href="{% url 'login' %}"> Log In</a>
     {% endif %}
@@ -34,20 +34,5 @@
     <br>
 </div>
 
-{% block footer %} 
-<div class="footer  d-none d-sm-block">
-    <div class="row text-center">
-        <hr>
-        <div class="col-sm-6">
-            <h4>Contact</h4>
-            <p>arregloskahoot@gmail.com</p>
-        </div>
-        <div class="col-sm-6">
-            <h4>About</h4>
-            <p>Developed by grupito PSI</p>
-        </div>
-    </div>
-</div>
-{% endblock %}
 
 {% endblock content %}

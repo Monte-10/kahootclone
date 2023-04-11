@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-   Game
+   Juego
 {% endblock %}
 
 {% block stylesheets %}
@@ -14,23 +14,23 @@
     <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center bg-info">
 
         {%if is_owner == False %}
-            <h1>Game does not belong to logged user</h1>
+            <h1>El juego no pertenece al usuario loggeado</h1>
         {%else%}
         <div class="alert alert-success container p-none text-center" role="alert">
-            <h3>Connect to https://127.0.0.1:8001/djangoClientServer/gamejoin/</h3>
-            with PIN
+            <h3>Conectate a XXXXX</h3>
+            con el PIN
             <h3>{{ game.publicId }}</h3>
         </div>
         
-        <p>As soon as you log in, your alias will be displayed here</p>
-        <a class="btn btn-primary btn-lg mr-3" href="{% url 'game-count-down' %}" role="button">Get Started</a>
-        <h2>List of participants: </h2>
+        <p>Cuando entres, tu nombre aparecera aquí:</p>
+        <a class="btn btn-primary btn-lg mr-3" href="{% url 'game-count-down' %}" role="button">Empezar</a>
+        <h2>Lista de participantes: </h2>
             
         <div id="test"></div>
         
         {% load static %}
         <audio controls loop autoplay hidden>
-            <source src="{% static 'audio/lobby.mp3' %}" type="audio/mpeg"> Your browser does not support the audio element .
+            <source src="{% static 'audio/lobby.mp3' %}" type="audio/mpeg"> Tu navegador no soporta el audio.
         </audio>
     </div>
     

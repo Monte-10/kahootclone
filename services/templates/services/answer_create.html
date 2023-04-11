@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 {% block title %}
-   Create answer
+   Crear Respuesta
 {% endblock %}
 
 {% block content %}
 <div class="container p-none">
     <div class="side-p">
-        <h3>Create Answer</h3>
+        <h3>Crear Respuesta</h3>
         <form action="" method="post">
             {% csrf_token %}
             <table>
                 {{ form.as_table }}
             </table>
             <br>
-            <input class="btn btn-link" type="button" value="Cancel" onclick="window.history.go(-1);">
-            <input class="btn btn-primary" type="submit" value="Create answer">
+            <input class="btn btn-link" type="button" value="Cancelar" onclick="window.history.go(-1);">
+            <input class="btn btn-primary" type="submit" value="Crear respuesta">
         </form>
     </div>
 </div>

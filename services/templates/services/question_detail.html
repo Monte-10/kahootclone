@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-   Question detail
+   Detalles Pregunta
 {% endblock %}
 
 {% block content %}
@@ -8,30 +8,30 @@
     <div class="row">
         <div class="col-12">
         
-            <h1>Question Detail</h1>
+            <h1>Detalles Pregunta</h1>
 
             <h4>
                 <strong>{{question.question}}</strong> ({{question.answerTime}}s):
-                <a class="btn btn-outline-success btn-sm" href="{% url 'question-update' question.id %}">Edit question</a>
+                <a class="btn btn-outline-success btn-sm" href="{% url 'question-update' question.id %}">Editar Pregunta</a>
             </h4>
 
             <table class="table table-striped">
                 <tbody>
                 <tr>
-                    <th>Answer</th>
-                    <th>Correct</th>
+                    <th>Respuesta</th>
+                    <th>Correcta</th>
                     <th></th>
                 </tr>
                 {% if question.answer_set.all|length == 0 %}
-                <td> No answer detected </td>
+                <td> Respuesta no detectada </td>
                 {% else %}
                 {% for answer in question.answer_set.all %}
                     <tr>
                     <td>{{ answer.answer }}</td>
                     <td>{{ answer.correct }}</td>
                     <td>
-                        <a class="btn btn-outline-danger btn-sm" href="{% url 'answer-remove' answer.id %}">Remove</a>
-                        <a class="btn btn-outline-success btn-sm" href="{% url 'answer-update' answer.id %}">Edit</a>
+                        <a class="btn btn-outline-danger btn-sm" href="{% url 'answer-remove' answer.id %}">Borrar</a>
+                        <a class="btn btn-outline-success btn-sm" href="{% url 'answer-update' answer.id %}">Editar</a>
                     </td>
                     </tr>
                 {% endfor %}
@@ -40,9 +40,9 @@
             </table>
 
             {% if question.answer_set.all|length < 4 %}
-            <a class="btn btn-primary btn-lg mr-3" href="{% url 'answer-create' question.id %}"> Add New Answer</a>
+            <a class="btn btn-primary btn-lg mr-3" href="{% url 'answer-create' question.id %}"> Añadir nueva pregunta</a>
             {% endif %}
-            <a class="btn btn-outline-success btn-lg" href="{% url 'questionnaire-detail' question.questionnaire.id %}"> Back to questionnaire</a>
+            <a class="btn btn-outline-success btn-lg" href="{% url 'questionnaire-detail' question.questionnaire.id %}"> Volver al cuestionario</a>
 
         </div>  
     </div>

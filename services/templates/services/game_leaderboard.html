@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-   Podium
+   Podio
 {% endblock %}
 
 {% block stylesheets %}
@@ -12,7 +12,7 @@
 
 {% block content %}
         <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center bg-info">
-            <h1 class="text-white">Podium</h1>
+            <h1 class="text-white">Podio</h1>
             {% if game.participant_set.count > 0 %}
             <div id="chart_div" style="width: 100%; height: 500px;"></div>
             <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -37,13 +37,13 @@
                     }
                 </script>
             {% else %}
-                <h1 class="text-white">No participants</h1>
+                <h1 class="text-white">No participantes</h1>
             {% endif %}
             {%load static%}
                 <audio controls loop autoplay hidden>
-                    <source src="{% static 'audio/podium.mp3' %}" type="audio/mpeg"> Your browser does not support the audio element .
+                    <source src="{% static 'audio/podium.mp3' %}" type="audio/mpeg"> Tu navegador no soporta el audio.
                 </audio>
             <br>
-            <button class="btn btn-primary  btn-lg" onclick="window.location.href = '{% url 'home' %}';">New Kahoot</button>
+            <button class="btn btn-primary  btn-lg" onclick="window.location.href = '{% url 'home' %}';">Nuevo kahoot</button>
         </div>
 {% endblock %}

@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}
-   Questionnaire list
+   Lista de cuestionarios
 {% endblock %}
 
 {% block content %}
     <div class="container overflow-auto">
         <div class="row">
             <div class="col-12">
-                <h1>Questionnaire List</h1>
-                <a class="btn btn-primary btn-lg mb-2" role="button" href="{% url 'questionnaire-create' %}">Add New Questionnaire</a>
+                <h1>Lista de cuestionarios</h1>
+                <a class="btn btn-primary btn-lg mb-2" role="button" href="{% url 'questionnaire-create' %}">Añadir nuevo cuestionario</a>
                 <br>
                 <div class="row">
                     <div class="col-12">
@@ -17,7 +17,7 @@
                             {% for questionnaire in user.questionnaire_set.all %}
                             <tr>
                                 <td><a href="{% url 'questionnaire-detail' questionnaire.id %}">{{ questionnaire.title }}</a></td>
-                                <td><a class="btn btn-outline-danger btn-sm" href="{% url 'questionnaire-remove' questionnaire.id %}">Remove</a></td>
+                                <td><a class="btn btn-outline-danger btn-sm" href="{% url 'questionnaire-remove' questionnaire.id %}">Borrar</a></td>
                             </tr>
                             {% endfor %}
                             </tbody>

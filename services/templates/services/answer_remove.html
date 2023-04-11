@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 {% block title %}
-   Confirm delete?
+   ¿Confirmar borrado?
 {% endblock %}
 
 {% block content %}
 <div class="container p-none">
     <div class="side-p">
-        <h3>Are you sure?</h3>
-        <p> You're about to delete the answer <strong>{{ answer.answer }}</strong>, please confirm.</p>
+        <h3>¿Estás seguro?</h3>
+        <p> Estas a punto de borrar la respuesta <strong>{{ answer.answer }}</strong>, confirma la acción.</p>
         <form action="" method="post">
             {% csrf_token %}
-            <input class="btn btn-link" type="button" value="Cancel" onclick="window.history.go(-1);">
-            <input class="btn btn-danger" type="submit" value="Confirm">
+            <input class="btn btn-link" type="button" value="Cancelar" onclick="window.history.go(-1);">
+            <input class="btn btn-danger" type="submit" value="Confirmar">
         </form>
     </div>
 </div>
