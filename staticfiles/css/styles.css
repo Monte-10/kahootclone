@@ -1,0 +1,26 @@
+.footer{
+    display: flex;
+    flex-direction: row;
+}
+  
+.footer div {
+    flex: 1;
+    width: 33%;
+}
+  
+.questionnaire-title{
+    display: flex;
+    flex-direction: row;
+}
+  
+html, body {
+    height: 100%;
+}
+  
+.game-wait{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
