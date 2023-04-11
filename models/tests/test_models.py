@@ -1,24 +1,20 @@
-# created by R. Marabini 
+# created by R. Marabini
 # on lun ago 22 11:14:51 CEST 2022
 from django.test import TestCase
 from datetime import datetime, timezone, timedelta
 from time import sleep
 import random
 import string
-import os
 
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kahootclone.settings')
-# import carpeta.archivo 
 ###################
 # You may modify the following variables
-from ..models import User
-from ..models import Questionnaire as Questionnaire
-from ..models import Question as Question
-from ..models import Answer as Answer
-from ..models import Game as Game
-from ..models import Participant as Participant
-from ..models import Guess as Guess
+from models.models import User as User
+from models.models import Questionnaire as Questionnaire
+from models.models import Question as Question
+from models.models import Answer as Answer
+from models.models import Game as Game
+from models.models import Participant as Participant
+from models.models import Guess as Guess
 # we assume the different states are defined in constants.py
 from ..constants import WAITING as WAITING
 

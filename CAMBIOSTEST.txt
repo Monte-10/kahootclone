@@ -1,0 +1,5 @@
+Se han realizado cambios muy pequeños asique se ha decidido no crear un nuevo .py para estos y se han modificado en los propios test, estos son:
+
+Se ha añadido un pequeño test al final de test_services_game.py para comprobar el funcionamiento del Leaderboard.
+
+Se ha añadido una línea en test_authentication.py para comprobar que sign_up funciona cuando se utiliza GET.

@@ -20,7 +20,7 @@ class Home(TemplateView):
         context = super(Home, self).get_context_data(**kwargs)
         if self.request.user.is_authenticated:
             questionnaires = Questionnaire.objects.filter(user=self.request.user).order_by('-updated_at')[:5]
-            context['lastest_questionnaires_list'] = questionnaires
+            context['latest_questionnaire_list'] = questionnaires
         return context
 
 class QuestionnaireDetail(LoginRequiredMixin, DetailView):
@@ -210,16 +210,16 @@ class GameCreate(LoginRequiredMixin, TemplateView):
         return context
 
 class UpdateParticipant(LoginRequiredMixin, TemplateView):
-    template_name = 'services/game_create.html'
+    template_name = 'services/game_updateparticipant.html'
     redirect_field_name = 'login'
     
     def get_context_data(self, **kwargs):
         context = super(UpdateParticipant, self).get_context_data(**kwargs)
-        gameID = self.request.session['gameID']
+        gameID = self.request.session.get('gameID')
         game = get_object_or_404(Game, publicId=gameID)
         participants = Participant.objects.filter(game=game)
         context['participants'] = participants
-        context['is_owner'] = self.request.session['is_owner']
+        context['is_owner'] = self.request.session.get('is_owner')
         return context
     
 class CountDown(LoginRequiredMixin, TemplateView):
@@ -252,7 +252,7 @@ class CountDown(LoginRequiredMixin, TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(CountDown, self).get_context_data(**kwargs)
-        gameID = self.eqquest.session.get('gameID')
+        gameID = self.request.session.get('gameID')
         game = get_object_or_404(Game, publicId=gameID)
         context['game'] = game
         question = game.questionnaire.question_set.all()[game.questionNo]

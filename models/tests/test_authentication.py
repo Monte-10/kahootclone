@@ -2,20 +2,14 @@
 # lun ago 22 11:14:51 CEST 2022
 
 import re
-import os
 from decimal import Decimal
 
 
 from django.test import Client, TestCase  # , TransactionTestCase
 from django.urls import reverse
 
-
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kahootclone.settings')
-
 try:
-    from ..models import User
-
+    from models.models import User
 except ImportError:
     print('No custom defined User method defined in models.py')
     exit(0)
@@ -186,6 +180,7 @@ class LogInOutServiceTests(ServiceBaseTest):
         self.assertFalse(
             User.objects.filter(username=user["username"]).exists())
         # send signup request
+        self.client1.post(reverse(SIGNUP_SERVICE), follow=True)
         self.client1.post(reverse(SIGNUP_SERVICE), user, follow=True)
         u = User.objects.filter(username="user_%d" % i)[0]
         # login

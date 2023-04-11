@@ -14,7 +14,7 @@
     <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center bg-info">
 
         {%if is_owner == False %}
-            <h1>El juego no pertenece al usuario loggeado</h1>
+            <h1>This game does not belong to logged user .</h1>
         {%else%}
         <div class="alert alert-success container p-none text-center" role="alert">
             <h3>Conectate a XXXXX</h3>
@@ -30,7 +30,7 @@
         
         {% load static %}
         <audio controls loop autoplay hidden>
-            <source src="{% static 'audio/lobby.mp3' %}" type="audio/mpeg"> Tu navegador no soporta el audio.
+            <source src="{% static 'audio/waiting.mp3' %}" type="audio/mpeg"> Tu navegador no soporta el audio.
         </audio>
     </div>
     
