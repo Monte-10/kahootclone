@@ -84,9 +84,7 @@ import dj_database_url
 
 DATABASES = {}
 
-POSTGRESQL_URL = 'postgres://alumnodb:alumnodb@localhost/psi'
-
-if 'TESTING' in os.environ:
+"""if 'TESTING' in os.environ:
     db_from_env = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'psi',
@@ -99,7 +97,21 @@ else:
     DATABASE_URL = os.environ.get('DATABASE_URL')
     db_from_env = dj_database_url.config(DATABASE_URL, conn_max_age=500)
 
-DATABASES['default'] = db_from_env
+DATABASES['default'] = db_from_env"""
+
+if 'TESTING' in os.environ:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'psi',
+        'USER': 'alumnodb',
+        'PASSWORD': 'alumnodb',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+else:
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+    DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
