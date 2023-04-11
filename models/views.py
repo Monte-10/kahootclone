@@ -1,16 +1,7 @@
-from django.shortcuts import render
-
 # Create your views here.
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.shortcuts import get_object_or_404
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from .forms import SignUpForm
-
-from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 def signup(request):
     if request.method == 'POST':
@@ -31,4 +22,4 @@ def signup(request):
        'form': form,
     }
         
-    return render(request, 'registration/sign_up.html', context)
+    return render(request, 'sign_up.html', context)

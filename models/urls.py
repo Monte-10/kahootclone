@@ -4,5 +4,5 @@ from django.conf.urls import url
 from django.urls import reverse
 
 urlpatterns = [
-    path('signup/', views.signup, name='signup'),
+    url(r'^signup/$', views.signup, name='signup'),
 ]

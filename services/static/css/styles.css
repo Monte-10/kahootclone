@@ -1,17 +1,26 @@
-h1 {
-    color: rgba(181, 21, 187, 0.795);
+.footer{
+    display: flex;
+    flex-direction: row;
 }
-
-h3 {
-    color: rgba(181, 21, 187, 0.795);
+  
+.footer div {
+    flex: 1;
+    width: 33%;
 }
-
-#id_title {
-    width: 600px;
+  
+.questionnaire-title{
+    display: flex;
+    flex-direction: row;
 }
-
-@media (max-width: 979px) .navbar-fixed-top,
-.navbar-fixed-bottom {
-    position: fixed;
+  
+html, body {
+height: 100%;
 }
-}
+  
+.game-wait{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
