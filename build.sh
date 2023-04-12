@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -o errexit  # exit on error
+export DJANGO_SU_PASSWORD=alumnodb
 
 pip install -r requirements.txt
 
