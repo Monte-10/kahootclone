@@ -30,6 +30,7 @@ class Question(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     answerTime = models.IntegerField(validators=[MinValueValidator(0)], default=20, blank=True)
+    value = models.IntegerField(default=1)
 
     def __str__(self):
         return self.question
@@ -91,7 +92,7 @@ class Guess(models.Model):
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        self.participant.points += 1 if self.answer.correct else 0
+        self.participant.points += self.question.value if self.answer.correct else 0
         self.participant.save()
         super(Guess, self).save(*args, **kwargs)
 

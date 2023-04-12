@@ -107,7 +107,7 @@ class QuestionRemove(LoginRequiredMixin, DeleteView):
 class QuestionUpdate(LoginRequiredMixin, UpdateView):
     model = Question
     template_name = 'services/question_update.html'
-    fields = ['question', 'answerTime']
+    fields = ['question', 'answerTime', 'value']
     redirect_field_name = 'login'
     
     def get_success_url(self):
@@ -122,7 +122,7 @@ class QuestionUpdate(LoginRequiredMixin, UpdateView):
 class QuestionCreate(LoginRequiredMixin, CreateView):
     model = Question
     template_name = 'services/question_create.html'
-    fields = ['question', 'answerTime']
+    fields = ['question', 'answerTime', 'value']
     redirect_field_name = 'login'
     
     def get_success_url(self):

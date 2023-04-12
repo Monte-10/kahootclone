@@ -20,15 +20,17 @@
                 <tr>
                     <th>Pregunta</th>
                     <th>Número de respuestas</th>
+                    <th>Valor de la pregunta</th>
                     <th></th>
                 </tr>
                 {% if questionnaire.question_set.all|length == 0 %}
-                    <td> No se han detectado preguntas </td>
+                    <td colspan="4"> No se han detectado preguntas </td>
                 {% else %}
                     {% for question in questionnaire.question_set.all %}
                     <tr>
                     <td><a href="{% url 'question-detail' question.id %}">{{ question.question }}</a></td>
                     <td>{{ question.answer_set.count }}</td>
+                    <td>{{ question.value }}</td>
                     <td><a class="btn btn-outline-danger btn-sm" href="{% url 'question-remove' question.id %}">Borrar</a></td>
                     </tr>
                     {% endfor %}

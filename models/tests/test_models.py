@@ -92,6 +92,7 @@ class ModelTests(TestCase):
             'question': 'question_text',
             'questionnaire': questionnaire,
             'answerTime': 20,
+            'value': 10,
             }
         return self.create_check(questionDict, Question, check)
 
@@ -103,6 +104,7 @@ class ModelTests(TestCase):
         now = datetime.now(timezone.utc)
         self.assertTrue((now - question.created_at) < timedelta(seconds=1))
         self.assertTrue((now - question.updated_at) < timedelta(seconds=1))
+        self.assertEqual(question.value, 10)
 
     def createAnswer(self, check):
         question = self.createQuestion(check=True)
@@ -164,4 +166,4 @@ class ModelTests(TestCase):
     def test07_guess(self):
         print("test guess")
         guess = self.createGuess(check=True)
-        self.assertEqual(guess.participant.points, 1)
+        self.assertEqual(guess.participant.points, 10)
