@@ -180,7 +180,7 @@ class LogInOutServiceTests(ServiceBaseTest):
         self.assertFalse(
             User.objects.filter(username=user["username"]).exists())
         # send signup request
-        self.client1.post(reverse(SIGNUP_SERVICE), follow=True)
+        self.client1.get(reverse(SIGNUP_SERVICE), follow=True)
         self.client1.post(reverse(SIGNUP_SERVICE), user, follow=True)
         u = User.objects.filter(username="user_%d" % i)[0]
         # login

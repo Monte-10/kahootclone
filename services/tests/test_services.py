@@ -10,6 +10,7 @@ from models.models import Questionnaire as Questionnaire
 from models.models import Question as Question
 from models.models import Answer as Answer
 from models.models import Game as Game
+from services.forms import QuestionnaireForm as QuestionnaireForm
 # from models.models import Participant as Participant
 # from models.models import Guess as Guess
 
@@ -193,6 +194,9 @@ class ServiceTests(ServiceBaseTest):
 
         return response
 
+    def test_form(self):
+        form = QuestionnaireForm(data=self.questionnaireDict)
+        self.assertTrue(form.is_valid())
 # ==== HOME ====
     def test01_home(self):
         " check content in home_page view"
@@ -377,7 +381,7 @@ class ServiceTests(ServiceBaseTest):
         self.checkLogin(
             QUESTION_UPDATE_SERVICE, QUESTION_UPDATE_KEY, args=args)
         # print("RESPONSE", self.decode(response.content))
-        kwargs = {'question': 'another question'}
+        kwargs = {'question': 'another question', 'value': 10}
         self.checkLoginSecondPart(
             QUESTION_UPDATE_SERVICE, args=args, kwargs=kwargs)
         # print("RESPONSE", self.decode(response.content))
@@ -385,6 +389,7 @@ class ServiceTests(ServiceBaseTest):
         # that is, self.questionnarie has old values
         question = Question.objects.get(id=id)
         self.assertEqual(question.question, kwargs["question"])
+        self.assertEqual(question.value, kwargs["value"])
 
     def test16_questionCreate(self):
         "check questionCreate"
@@ -393,7 +398,7 @@ class ServiceTests(ServiceBaseTest):
         Question.objects.all().delete()
         id = self.questionnaire.id
         args = [str(id)]
-        kwargs = {'question': 'new question'}
+        kwargs = {'question': 'new question', 'value': 5}
 
         # no login, therefore key should be empty
         # response =
@@ -413,6 +418,7 @@ class ServiceTests(ServiceBaseTest):
         # self.questionnarie has old values
         question = Question.objects.first()
         self.assertEqual(question.question, kwargs["question"])
+        self.assertEqual(question.value, kwargs["value"])
         self.assertEqual(question.questionnaire.id, int(id))
 
 # ===== ANSWER =====
