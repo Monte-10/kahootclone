@@ -10,6 +10,6 @@ class Command(BaseCommand):
         if not User.objects.filter(username='alumnodb').exists():
             User.objects.create_superuser(
                 username='alumnodb',
-                password=os.getenv('DJANGO_SU_PASSWORD')
+                password='alumnodb'
             )
         print('Superuser has been created.')
