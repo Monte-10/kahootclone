@@ -1,3 +1,5 @@
+AVISO: La línea de settings de whitenoise no pasa flake8, pero sino no funciona la practica.
+
 Se han realizado cambios muy pequeños asi que se ha decidido no crear un nuevo .py para estos y se han modificado en los propios test, estos cambios son:
 
 - Se ha añadido un pequeño test al final de test_services_game.py para comprobar el funcionamiento del Leaderboard.
