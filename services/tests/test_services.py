@@ -155,7 +155,7 @@ class ServiceTests(ServiceBaseTest):
         # check no latest_questionnaire_list
         try:
             self.assertFalse(KEY in response.context)
-        except Exception as e:
+        except Exception:
             pass
         # return should be login page
         if redirectLoginPage:
@@ -198,6 +198,7 @@ class ServiceTests(ServiceBaseTest):
         form = QuestionnaireForm(data=self.questionnaireDict)
         self.assertTrue(form.is_valid())
 # ==== HOME ====
+
     def test01_home(self):
         " check content in home_page view"
         # no login, therefore key should be empty
@@ -280,7 +281,7 @@ class ServiceTests(ServiceBaseTest):
         # field
         for q1, q2 in zip(questionnaires,
                           response.context[QUESTIONNAIRE_LIST_KEY]):
-                self.assertEqual(q1, q2)
+            self.assertEqual(q1, q2)
 
     def test05_questionnaireUpdate(self):
         "check questionaireUpdate"
@@ -311,7 +312,7 @@ class ServiceTests(ServiceBaseTest):
 
         # no login, therefore key should be empty
         self.checkNoLogin(
-           QUESTIONNAIRE_CREATE_SERVICE, 'DO_NOT_CHECK_KEY', args=None)
+            QUESTIONNAIRE_CREATE_SERVICE, 'DO_NOT_CHECK_KEY', args=None)
 
         # login in, two calls are needed because there is an intermediate
         # form  asking for the field 'title'
@@ -342,8 +343,8 @@ class ServiceTests(ServiceBaseTest):
 
         # check the questioan detail are in the respònse
         self.assertEqual(
-           self.question.question,
-           response.context[QUESTION_DETAIL_KEY].question)
+            self.question.question,
+            response.context[QUESTION_DETAIL_KEY].question)
         # if I change the title the object should be different
         self.question.question = "another question"
         self.assertNotEqual(
@@ -531,5 +532,5 @@ class ServiceTests(ServiceBaseTest):
         response = self.checkLogin(
             GAME_CREATE_SERVICE, 'DO_NOT_CHECK_KEY', args=args)
         self.assertNotEqual(
-             self.decode(
-                 response.content).find("does not belong to logged user"), -1)
+            self.decode(
+                response.content).find("does not belong to logged user"), -1)

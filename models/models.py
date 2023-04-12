@@ -6,10 +6,10 @@ import uuid
 import random
 
 
-
 class User(AbstractUser):
     pass
-    
+
+
 class Questionnaire(models.Model):
     title = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -19,7 +19,7 @@ class Questionnaire(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     class Meta:
         ordering = ['-updated_at']
 
@@ -29,7 +29,8 @@ class Question(models.Model):
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    answerTime = models.IntegerField(validators=[MinValueValidator(0)], default=20, blank=True)
+    answerTime = models.IntegerField(
+        validators=[MinValueValidator(0)], default=20, blank=True)
     value = models.IntegerField(default=1)
 
     def __str__(self):
@@ -52,14 +53,14 @@ class Game(models.Model):
         (ANSWER, 'Answer'),
         (LEADERBOARD, 'Leaderboard'),
     )
-    
-    
-    
+
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     state = models.IntegerField(choices=STATE_CHOICES, default=WAITING)
-    publicId = models.IntegerField(unique=True, validators=[MinValueValidator(1), MaxValueValidator(10**6)])
-    countdownTime = models.IntegerField(validators=[MinValueValidator(0)], default=3)
+    publicId = models.IntegerField(unique=True, validators=[
+                            MinValueValidator(1), MaxValueValidator(10**6)])
+    countdownTime = models.IntegerField(
+        validators=[MinValueValidator(0)], default=3)
     questionNo = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
@@ -68,7 +69,7 @@ class Game(models.Model):
                 self.publicId = random.randint(1, 10**6)
                 if not Game.objects.filter(publicId=self.publicId).exists():
                     break
-        super(Game,self).save(*args, **kwargs)
+        super(Game, self).save(*args, **kwargs)
 
     def __str__(self):
         return str(self.publicId)
@@ -84,7 +85,6 @@ class Participant(models.Model):
         return self.alias
 
 
-
 class Guess(models.Model):
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
@@ -92,10 +92,11 @@ class Guess(models.Model):
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        self.participant.points += self.question.value if self.answer.correct else 0
+        self.participant.points += (self.question.value
+                                    if self.answer.correct else 0)
+
         self.participant.save()
         super(Guess, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.answer
-    

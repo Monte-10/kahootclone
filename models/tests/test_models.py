@@ -66,7 +66,7 @@ class ModelTests(TestCase):
         questionnaireDict = {
             'title': 'questionnaire_title',
             'user': user
-            }
+        }
         return self.create_check(questionnaireDict, Questionnaire, check)
 
     def test02_questionnaire(self):
@@ -93,7 +93,7 @@ class ModelTests(TestCase):
             'questionnaire': questionnaire,
             'answerTime': 20,
             'value': 10,
-            }
+        }
         return self.create_check(questionDict, Question, check)
 
     def test03_question(self):
@@ -112,7 +112,7 @@ class ModelTests(TestCase):
             'answer': 'answer_text',
             'question': question,
             'correct': True,
-            }
+        }
         return self.create_check(answerDict, Answer, check)
 
     def test04_answer(self):
@@ -127,7 +127,7 @@ class ModelTests(TestCase):
             'state': WAITING,
             'countdownTime': 10,
             'questionNo': 3,
-            }
+        }
         return self.create_check(gameDict, Game, check)
 
     def test05_game(self):
@@ -143,7 +143,7 @@ class ModelTests(TestCase):
             'game': game,
             'alias': 'mialias',
             'points': 0,
-            }
+        }
         return self.create_check(participantDict, Participant, check)
 
     def test06_participant(self):
@@ -160,7 +160,7 @@ class ModelTests(TestCase):
             'participant': participant,
             'question': question,
             'answer': answer,
-            }
+        }
         return self.create_check(guessDict, Guess, check)
 
     def test07_guess(self):

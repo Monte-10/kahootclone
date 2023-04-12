@@ -28,10 +28,10 @@ PAGE_AFTER_LOGOUT = "home"
 
 
 SERVICE_DEF = {
-     LOGIN_SERVICE: {
-         "title": 'Log In',
-         "pattern": "Log In"
-     },
+    LOGIN_SERVICE: {
+        "title": 'Log In',
+        "pattern": "Log In"
+    },
 }
 # PLease do not modify anything below this line
 ###################
@@ -44,6 +44,7 @@ class ServiceBaseTest(TestCase):
     This behavoiur may be avoided by inheriting
     from django.test.TransactionTestCase instead of TestCase.
     Then the data will be visible in the database."""
+
     def setUp(self):
         User.objects.all().delete()
         self.usersList = []

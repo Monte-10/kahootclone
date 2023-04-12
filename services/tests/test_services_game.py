@@ -9,7 +9,7 @@ from .test_services import ServiceBaseTest
 # You may modify the following variables
 from models.models import User as User
 # from models.models import Questionnaire as Questionnaire
-from models.models import Question as Question
+# from models.models import Question as Question
 # from models.models import Answer as Answer
 from models.models import Game as Game
 from models.models import Participant as Participant
@@ -59,7 +59,7 @@ class ServiceTests2(ServiceBaseTest):
         # check no latest_questionnaire_list
         try:
             self.assertFalse(KEY in response.context)
-        except Exception as e:
+        except Exception:
             pass
         # return should be login page
         if redirectLoginPage:
@@ -98,8 +98,8 @@ class ServiceTests2(ServiceBaseTest):
 
         return response
 
-
 # GAME
+
     def test01_gameUpdateParticipant(self):
         "check how web page is update when participant join"
         from models.constants import WAITING
@@ -151,8 +151,8 @@ class ServiceTests2(ServiceBaseTest):
             reverse(GAME_UPDATE_PARTICIPANT_SERVICE), follow=True)
 
         self.assertNotEqual(
-             self.decode(
-                 response.content).find("does not belong to logged user"), -1)
+            self.decode(
+                response.content).find("does not belong to logged user"), -1)
 
     def test02_gameCountdown(self):
         """Check how the estate of game changes as we play.

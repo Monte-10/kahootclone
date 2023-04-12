@@ -10,9 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import dj_database_url
 from pathlib import Path
 import os
-from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
-# SECRET_KEY = 'django-insecure-vt%5rx=n&2vl!p9b6na@wkn*+^^^7lyp#-zfhf500_*x1vl@&&'
+# SECRET_KEY = 'django-insecure-vt%5rx=n&2vl!p9b6na@wkn*+^^^7lyp#-zfhf500_*x1v
+# l@&&' Separado por el flake8
 
 if 'DEBUG' in os.environ:
     DEBUG = os.environ.get('DEBUG').lower() in ['true', 't', '1']
@@ -78,9 +79,10 @@ WSGI_APPLICATION = 'kahootclone.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-# URL: postgres://Monte-10:UsxbZv5QqIz3@ep-floral-flower-150155.eu-central-1.aws.neon.tech/kahootclone
-import dj_database_url
+# https://docs.djangoproject.com/en/3.2/ref/settings
+# /#databases
+# URL: postgres://Monte-10:UsxbZv5QqIz3@ep-floral-flower-150155.eu-c
+# entral-1.aws.neon.tech/kahootclone
 
 DATABASES = {}
 
@@ -110,7 +112,8 @@ if 'TESTING' in os.environ:
     }
 else:
     DATABASE_URL = os.environ.get('DATABASE_URL')
-    DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+    DATABASES['default'] = dj_database_url.parse(
+        DATABASE_URL, conn_max_age=600)
 
 
 # Password validation
@@ -120,16 +123,20 @@ AUTH_USER_MODEL = 'models.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+        'UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+        'MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+        'CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+        'NumericPasswordValidator',
     },
 ]
 
@@ -158,8 +165,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 if not DEBUG:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    
+    STATICFILES_STORAGE = 'whitenoise.storage.'
+    'CompressedManifestStaticFilesStorage'
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home'
