@@ -85,6 +85,7 @@ class Participant(models.Model):
         return self.alias
 
 
+
 class Guess(models.Model):
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
