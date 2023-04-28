@@ -99,6 +99,7 @@ class Participant(models.Model):
         return self.alias
 
 
+
 class Guess(models.Model):
     """Modelo que representa una respuesta a una pregunta"""
     participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
