@@ -5,6 +5,18 @@ from .forms import SignUpForm
 
 
 def signup(request):
+    """
+    Vista que permite el registro de un usuario a través
+    de un formulario. Crea un nuevo usario con la información
+    que se le pasa en el formulario y lo guarda en la base de datos.
+    Luego inicia sesión con el usuario creado y redirige a la página.
+    
+    :param request: Petición HTTP
+    
+    :return: Redirige a la página de inicio
+    
+    Autor: Alejandro Monterrubio
+    """
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():

@@ -8,6 +8,8 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
+
+AUTORES: Alejandro Monterrubio, Juan Francisco Flores, Pablo Hernaez.
 """
 
 import dj_database_url
@@ -22,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = '18f80c20777ed8253da8078380fe9193'
 # SECRET_KEY = 'django-insecure-vt%5rx=n&2vl!p9b6na@wkn*+^^^7lyp#-zfhf500_*x1v
 # l@&&' Separado por el flake8
 
