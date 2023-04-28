@@ -37,3 +37,10 @@ class Participant(models.Model):
         ordering = ['id']
     
 class Guess(models.Model):
+    participant = models.ForeignKey(Participant, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['id']
