@@ -8,6 +8,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
+AUTORES: Alejandro Monterrubio, Juan Francisco Flores, Pablo Hernaez.
 """
 
 import dj_database_url
