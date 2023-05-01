@@ -1,20 +1,11 @@
-from .models import *
+from models.models import Game, Participant, Guess
 from rest_framework import serializers
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = '__all__'
         
-class AnswersSerializer(serializers.ModelSerializer):
+class GameSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Answers
+        model = Game
         fields = '__all__'
-        
-class GamesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Games
-        fields = '__all__'
+        lookup_field = 'publicId'
         
 class ParticipantSerializer(serializers.ModelSerializer):
     class Meta:

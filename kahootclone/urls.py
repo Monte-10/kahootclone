@@ -19,12 +19,23 @@ from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
 
+from rest_framework import routers
+from restServer import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('models/', include('models.urls')),
     path('services/', include('services.urls')),
     path('', RedirectView.as_view(url='services/', permanent=True)),
+]
+router = routers.DefaultRouter()
+router.register(r'participants', views.ParticipantViewSet)
+router.register(r'games', views.GameViewSet)
+router.register(r'guesses', views.GuessViewSet)
+
+urlpatterns += [
+    path('api/', include(router.urls)),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

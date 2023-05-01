@@ -24,14 +24,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
-SECRET_KEY = '18f80c20777ed8253da8078380fe9193'
+
 # SECRET_KEY = 'django-insecure-vt%5rx=n&2vl!p9b6na@wkn*+^^^7lyp#-zfhf500_*x1v
 # l@&&' Separado por el flake8
 
 if 'DEBUG' in os.environ:
     DEBUG = os.environ.get('DEBUG').lower() in ['true', 't', '1']
 else:
-    DEBUG = 'RENDER' not in os.environ
+    if 'RENDER' in os.environ:
+        DEBUG = False
+    else:
+        DEBUG = True
+        SECRET_KEY = '18f80c20777ed8253da8078380fe9193'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
@@ -48,9 +52,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'models.apps.ModelsConfig',
     'services.apps.ServicesConfig',
+    'restServer.apps.RestserverConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -105,19 +112,15 @@ else:
 
 DATABASES['default'] = db_from_env"""
 
+LOCALPOSTGRES = 'postgresql://alumnodb:alumnodb@localhost:5432/psi'
+
 if 'TESTING' in os.environ:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'psi',
-        'USER': 'alumnodb',
-        'PASSWORD': 'alumnodb',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
+    d_env = dj_database_url.parse(LOCALPOSTGRES, conn_max_age=600)
 else:
-    DATABASE_URL = os.environ.get('DATABASE_URL')
-    DATABASES['default'] = dj_database_url.parse(
-        DATABASE_URL, conn_max_age=600)
+    d_env = dj_database_url.config(conn_max_age=600,
+                                         default=LOCALPOSTGRES)
+    
+DATABASES['default'] = d_env
 
 
 # Password validation
@@ -175,3 +178,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+]
