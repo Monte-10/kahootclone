@@ -13,6 +13,15 @@ class ParticipantViewSet(viewsets.ModelViewSet):
     
     
     def get_permissions(self):
+        """
+        Se encarga de definir los permisos de cada método.
+        
+        Args:  
+            self: instancia de la clase.
+            
+        Returns:
+            Lista de permisos.
+        """
         if self.action == 'create':
             self.permission_classes = [permissions.AllowAny]
         else:
@@ -20,6 +29,23 @@ class ParticipantViewSet(viewsets.ModelViewSet):
         return super().get_permissions()
     
     def create(self, request, *args, **kargs):
+        """
+        Se encarga de crear un participante en una partida con
+        la informacion recibida en la peticion. Si la partida
+        existe y el alias no esta en uso, crea el participante.
+        
+        Args:
+            self: instancia de la clase.
+            request: peticion recibida.
+            *args: argumentos.
+            **kargs: argumentos clave.
+            
+        Returns:
+            Respuesta de la peticion.
+            
+        Author:
+            Alejandro Monterrubio
+        """
         if not request.data['alias'] or not request.data['game']:
             return JsonResponse(
                 {'error': 'You must fill both fields'}, 
@@ -58,6 +84,18 @@ class GameViewSet(viewsets.ModelViewSet):
     lookup_field = 'publicId'
     
     def get_permissions(self):
+        """
+        Se encarga de definir los permisos de cada método.
+        
+        Args:  
+            self: instancia de la clase.
+            
+        Returns:
+            Lista de permisos.
+            
+        Author:
+            Pablo Hernaez
+        """
         if self.action == 'list' or self.action == 'retrieve':
             self.permission_classes = [permissions.AllowAny]
         else:
@@ -70,6 +108,15 @@ class GuessViewSet(viewsets.ModelViewSet):
     permission_classes = []
     
     def get_permissions(self):
+        """
+        Se encarga de definir los permisos de cada método.
+        
+        Args:  
+            self: instancia de la clase.
+            
+        Returns:
+            Lista de permisos.
+        """
         if self.action == 'create':
             self.permission_classes = [permissions.AllowAny]
         else:
@@ -77,6 +124,24 @@ class GuessViewSet(viewsets.ModelViewSet):
         return super().get_permissions()
     
     def create(self, request, *args, **kargs):
+        """
+        Se encarga de crear una respuesta en una partida con
+        la informacion recibida en la peticion. Si la partida
+        existe y el participante existe y este
+        no ha respondido antes, crea la respuesta.
+        
+        Args:
+            self: instancia de la clase.
+            request: peticion recibida.
+            *args: argumentos.
+            **kargs: argumentos clave.
+            
+        Returns:
+            Respuesta de la peticion.
+
+        Author:
+            Juan Francisco Flores
+        """
         id = int(request.data['game'])
         uuidP = request.data['uuidp']
         answerNo = int(request.data['answer'])
