@@ -26,3 +26,15 @@ services/urls.py                      3      0   100%
 services/views.py                   213      0   100%
 ---------------------------------------------------------------
 TOTAL                               225      0   100%
+
+Name                                Stmts   Miss  Cover   Missing
+-----------------------------------------------------------------
+restServer/__init__.py                  0      0   100%
+restServer/admin.py                     1      0   100%
+restServer/apps.py                      4      0   100%
+restServer/migrations/__init__.py       0      0   100%
+restServer/models.py                    0      0   100%
+restServer/serializers.py              15      0   100%
+restServer/views.py                    77      0   100%
+-----------------------------------------------------------------
+TOTAL                                  97      0   100%

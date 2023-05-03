@@ -1,13 +1,7 @@
 AVISO: La línea de settings de whitenoise no pasa flake8, pero sino no funciona la practica.
 
-Se han realizado cambios muy pequeños asi que se ha decidido no crear un nuevo .py para estos y se han modificado en los propios test, estos cambios son:
+Se han realizado un solo cambio y se ha modificado el test de restServer, este cambio es:
 
-- Se ha añadido un pequeño test al final de test_services_game.py para comprobar el funcionamiento del Leaderboard.
+- Se ha modificado la linea 255, para que reciba el estado de respuesta no de pregunta.
 
-- Se ha añadido una línea en test_authentication.py línea 183 para comprobar que sign_up funciona cuando se utiliza GET.
-
-- De la línea 197 a 199 en test_services se ha añadido un pequeño test para comprobar el formulario de services/forms.py.
-
-- AÑADIDO POR GRUPO 3:
-    -- Como se pide la implementación de añadir valor a las preguntas, se han modificado los test para comprobar el funcionamiento, se han añadido en test_models las líneas 95, 107 y en la última línea se ha cambiado el valor de 1 a 10.
-    -- Para el test_services en la línea 396 y 416 se han añadido dos líneas de código para comprobar la creación de la pregunta y en las líneas 380 y 388 para actualizarlo.
+Se ha añadido tests_additional.py que contiene el resto de test para coverage del 100%.

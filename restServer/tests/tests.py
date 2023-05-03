@@ -5,7 +5,7 @@ from models.models import (Game, Guess, Participant,
                            User, Questionnaire, Question, Answer)
 from rest_framework.reverse import reverse
 import json
-from models.constants import QUESTION
+from models.constants import ANSWER
 ###################
 # You may modify the following variables
     # default API names
@@ -252,7 +252,7 @@ class RestTests(APITestCase):
                 }
         response = self.client.post(path=url, data=data, format='json')
         self.assertIn(GUESS_ERROR, self.decode(response.content))
-        self.game.state = QUESTION
+        self.game.state = ANSWER
         self.game.save()
         response = self.client.post(path=url, data=data, format='json')
         # print("response", self.decode(response.content))
