@@ -31,16 +31,17 @@ class Command(BaseCommand):
     # is executed.
     help = """populate kahootclone database
            """
-    # if you want to pass an argument to the function
-    # uncomment this line
 
     def add_arguments(self, parser):
         parser.add_argument('publicId',
                             type=int,
+                            default=None,
+                            nargs='?',
                             help='game the participants will join to')
         parser.add_argument('sleep',
                             type=float,
                             default=2.,
+                            nargs='?',
                             help='wait this seconds until ' +
                             'inserting next participant')
 
@@ -84,6 +85,7 @@ class Command(BaseCommand):
             self.question()  # create questions
             self.answer()  # create answers
             self.game()  # create games
+        # if argument populate participants
         else:
             self.publicId = kwargs['publicId']
             self.sleep = kwargs['sleep']
@@ -106,12 +108,14 @@ class Command(BaseCommand):
         print("Users")
         # create random users
         for _ in range(self.NUMBERUSERS):
-            username = self.faker.unique.user_name()
-            email = self.faker.unique.email()
+            username = self.faker.user_name()
+            email = self.faker.email()
             password = self.faker.password(length=10)
-            user = User(username=username, email=email, password=password)
+            user = User.objects.create_user(
+                username=username, email=email, password=password)
+            # create_User guarda ya?
             self.user_array.append(user)
-            user.save()
+            # user.save()
 
     def questionnaire(self):
         "insert questionnaires"

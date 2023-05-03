@@ -2,14 +2,22 @@ from django.http import JsonResponse
 from models.models import Game, Participant, Guess
 from rest_framework import viewsets
 from .serializers import GameSerializer, ParticipantSerializer, GuessSerializer
-from rest_framework.permissions import AllowAny
+from rest_framework import permissions
 from models.constants import ANSWER, WAITING
 
 # Create your views here.
 class ParticipantViewSet(viewsets.ModelViewSet):
     queryset = Participant.objects.all().order_by('id')
     serializer_class = ParticipantSerializer
-    permission_classes = [AllowAny]
+    permission_classes = []
+    
+    
+    def get_permissions(self):
+        if self.action == 'create':
+            self.permission_classes = [permissions.AllowAny]
+        else:
+            self.permission_classes = [permissions.IsAuthenticated]
+        return super().get_permissions()
     
     def create(self, request, *args, **kargs):
         if not request.data['alias'] or not request.data['game']:
@@ -44,39 +52,29 @@ class ParticipantViewSet(viewsets.ModelViewSet):
                 {'error': 'Game not found.'}, 
                 status=404)
             
-    def retrieve(self, request, *args, **kwargs):
-        return JsonResponse(
-            {'error': 'Authentication credentials were not provided.'},
-            status=404)
-        
-    def list(self, request, *args, **kwargs):
-        return JsonResponse(
-            {'error': 'Authentication credentials were not provided.'},
-            status=404)
-        
-    def update(self, request, *args, **kwargs):
-        return JsonResponse(
-            {'error': 'Authentication credentials were not provided.'},
-            status=404)
-    
-    def destroy(self, request, *args, **kwargs):
-        return JsonResponse(
-            {'error': 'Authentication credentials were not provided.'},
-            status=404)
-        
 class GameViewSet(viewsets.ModelViewSet):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
     lookup_field = 'publicId'
-    permission_classes = [AllowAny]
     
-    def create(self, request, *args, **kargs):
-        pass
+    def get_permissions(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            self.permission_classes = [permissions.AllowAny]
+        else:
+            self.permission_classes = [permissions.IsAuthenticated]
+        return super().get_permissions()
     
 class GuessViewSet(viewsets.ModelViewSet):
     queryset = Guess.objects.all()
     serializer_class = GuessSerializer
-    permission_classes = [AllowAny]
+    permission_classes = []
+    
+    def get_permissions(self):
+        if self.action == 'create':
+            self.permission_classes = [permissions.AllowAny]
+        else:
+            self.permission_classes = [permissions.IsAuthenticated]
+        return super().get_permissions()
     
     def create(self, request, *args, **kargs):
         id = int(request.data['game'])
@@ -122,28 +120,8 @@ class GuessViewSet(viewsets.ModelViewSet):
             else:
                 return JsonResponse(
                     {'error': 'wait until the question is shown.'},
-                    status=403)
+                    status=404)
         else:
             return JsonResponse(
                 {'error': 'Game not found.'},
                 status=404)
-            
-    def retrieve(self, request, *args, **kwargs):
-        return JsonResponse(
-            {'error': 'Authentication credentials were not provided.'},
-            status=404)
-        
-    def list(self, request, *args, **kwargs):
-        return JsonResponse(
-            {'error': 'Authentication credentials were not provided.'},
-            status=404)
-        
-    def update(self, request, *args, **kwargs):
-        return JsonResponse(
-            {'error': 'Authentication credentials were not provided.'},
-            status=403)
-        
-    def destroy(self, request, *args, **kwargs):
-        return JsonResponse(
-            {'error': 'Authentication credentials were not provided.'},
-            status=403)
